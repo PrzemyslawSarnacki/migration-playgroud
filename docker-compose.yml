@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    ports:
+      - 9920:5432
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_DB=gorm
+      - POSTGRES_USER=gorm
+      - POSTGRES_PASSWORD=gorm
