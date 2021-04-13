@@ -7,21 +7,30 @@ import (
 )
 
 func TestGORM(t *testing.T) {
-	user := User{
-		Name: "Ken",
-		Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar3"}`)),
-	}
+	// user := User{
+	// 	Name: "Ken",
+	// 	Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar3"}`)),
+	// }
 
-	DB.Create(&user)
+	// DB.Create(&user)
 
-	t.Run("test integrity", func(t *testing.T) {
-		var result User
-		if err := DB.First(&result, user.ID).Error; err != nil {
+	t.Run("test records after migration", func(t *testing.T) {
+		var results []User
+		if err := DB.Find(&results).Error; err != nil {
 			t.Errorf("Failed, got error: %v", err)
 		}
-		want := "Ken"
-		assertString(result.Name, want, t)
+		assertInt(len(results), 2, t)
+		assertString(results[0].Name, "Ken", t)
 	})
+
+	// t.Run("test integrity", func(t *testing.T) {
+	// 	var result User
+	// 	if err := DB.First(&result, user.ID).Error; err != nil {
+	// 		t.Errorf("Failed, got error: %v", err)
+	// 	}
+	// 	want := "Ken"
+	// 	assertString(result.Name, want, t)
+	// })
 
 	t.Run("test one condition", func(t *testing.T) {
 		var users []User
@@ -46,7 +55,6 @@ func TestGORM(t *testing.T) {
 		if err := DB.Where(query1, query2).Find(&users).Error; err != nil {
 			t.Errorf("Got error %v", err)
 		}
-		// users, _ = GetMultipleJSONQuery(query1, query2)
 		want := "Jack"
 		assertString(users[0].Name, want, t)
 	})
@@ -57,5 +65,11 @@ func assertString(got, want string, t testing.TB) {
 	t.Helper()
 	if got != want {
 		t.Errorf(`got "%s", want "%s"`, got, want)
+	}
+}
+func assertInt(got, want int, t testing.TB) {
+	t.Helper()
+	if got != want {
+		t.Errorf(`got "%d", want "%d"`, got, want)
 	}
 }

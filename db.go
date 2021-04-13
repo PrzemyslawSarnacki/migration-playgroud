@@ -1,8 +1,6 @@
 package main
 
 import (
-	"errors"
-	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -10,7 +8,6 @@ import (
 
 	"github.com/go-gormigrate/gormigrate/v2"
 
-	"gorm.io/datatypes"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -35,7 +32,6 @@ func init() {
 		}
 
 		RunMigrations()
-
 		if DB.Dialector.Name() == "sqlite" {
 			DB.Exec("PRAGMA foreign_keys = ON")
 		}
@@ -68,30 +64,7 @@ func RunMigrations() {
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(allModels), func(i, j int) { allModels[i], allModels[j] = allModels[j], allModels[i] })
 
-	var migrations = []*gormigrate.Migration{
-		{
-			ID: "1257894000",
-			Migrate: func(tx *gorm.DB) error {
-				return tx.AutoMigrate(&User{})
-			},
-			Rollback: func(tx *gorm.DB) error {
-				return tx.Migrator().DropTable("users")
-			},
-		},
-	}
-	timeStamp := fmt.Sprintf("%d", time.Now().Unix())
-
-	extendedMigrations := append(migrations, &gormigrate.Migration{
-		ID: timeStamp,
-		Migrate: func(tx *gorm.DB) error {
-			return tx.AutoMigrate(&User{})
-		},
-		Rollback: func(tx *gorm.DB) error {
-			return tx.Migrator().DropTable("users")
-		},
-	})
-
-	m := gormigrate.New(DB, gormigrate.DefaultOptions, extendedMigrations)
+	m := gormigrate.New(DB, gormigrate.DefaultOptions, migrations)
 
 	if err = m.RollbackLast(); err != nil {
 		log.Fatalf("Could not Rollback: %v", err)
@@ -107,14 +80,4 @@ func RunMigrations() {
 			os.Exit(1)
 		}
 	}
-}
-
-func GetMultipleJSONQuery(queries ...*datatypes.JSONQueryExpression) ([]User, error) {
-	var users []User
-
-	if err := DB.Where(queries).Find(&users).Error; err != nil {
-		return nil, errors.New("failed to execute json query")
-	}
-
-	return users, nil
 }
