@@ -7,8 +7,10 @@ import (
 )
 
 func TestGORM(t *testing.T) {
-	user := User{Name: "Ken",
-		Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar3"}`))}
+	user := User{
+		Name: "Ken",
+		Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar3"}`)),
+	}
 
 	DB.Create(&user)
 

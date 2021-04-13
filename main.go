@@ -1,8 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"gorm.io/datatypes"
+)
 
 func main() {
-	hehe := "World"
-	fmt.Println(hehe)
+	user := User{Name: "Ken",
+		Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar3"}`))}
+	var result User
+	DB.First(&result, user.ID)
+
+	DB.Create(&user)
+	fmt.Println(result.Name)
+
 }
