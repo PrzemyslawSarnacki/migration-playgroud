@@ -1,4 +1,4 @@
-module migration-playground
+module github.com/PrzemyslawSarnacki/migration-playgroud
 
 go 1.16
 

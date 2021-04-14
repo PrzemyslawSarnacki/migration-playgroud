@@ -1,9 +1,8 @@
 package main
 
 import (
-	"github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
+	// "github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
 	"github.com/PrzemyslawSarnacki/migration-playgroud/models"
-	"gorm.io/playground/models"
 	"testing"
 
 	"gorm.io/datatypes"
