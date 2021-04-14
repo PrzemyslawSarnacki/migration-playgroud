@@ -5,9 +5,10 @@ import (
 	"math/rand"
 	"os"
 	"time"
+	"https://github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
+	"https://github.com/PrzemyslawSarnacki/migration-playgroud/models"
 
 	"github.com/go-gormigrate/gormigrate/v2"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -60,11 +61,11 @@ func OpenTestConnection() (db *gorm.DB, err error) {
 
 func RunMigrations() {
 	var err error
-	allModels := []interface{}{&User{}}
+	allModels := []interface{}{&models.User{}}
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(allModels), func(i, j int) { allModels[i], allModels[j] = allModels[j], allModels[i] })
 
-	m := gormigrate.New(DB, gormigrate.DefaultOptions, migrations)
+	m := gormigrate.New(DB, gormigrate.DefaultOptions, migrations.Migrations)
 
 	if err = m.RollbackLast(); err != nil {
 		log.Fatalf("Could not Rollback: %v", err)

@@ -1,10 +1,10 @@
-package main
+package migrations
 
 import (
 	"github.com/go-gormigrate/gormigrate/v2"
 )
 
-var migrations = []*gormigrate.Migration{
+var Migrations = []*gormigrate.Migration{
 	initialMigration,
 	timestampMigration,
 }

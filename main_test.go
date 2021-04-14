@@ -1,7 +1,10 @@
 package main
 
 import (
+	"gorm.io/playground/models"
 	"testing"
+	"https://github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
+	"https://github.com/PrzemyslawSarnacki/migration-playgroud/models"
 
 	"gorm.io/datatypes"
 )
@@ -15,7 +18,7 @@ func TestGORM(t *testing.T) {
 	// DB.Create(&user)
 
 	t.Run("test records after migration", func(t *testing.T) {
-		var results []User
+		var results []models.User
 		if err := DB.Find(&results).Error; err != nil {
 			t.Errorf("Failed, got error: %v", err)
 		}
@@ -33,7 +36,7 @@ func TestGORM(t *testing.T) {
 	// })
 
 	t.Run("test one condition", func(t *testing.T) {
-		var users []User
+		var users []models.User
 
 		query := datatypes.JSONQuery("data").Equals("bar3", "foo2")
 
@@ -45,8 +48,8 @@ func TestGORM(t *testing.T) {
 	})
 
 	t.Run("test both conditions", func(t *testing.T) {
-		var users []User
-		DB.Create(&User{Name: "Jack",
+		var users []models.User
+		DB.Create(&models.User{Name: "Jack",
 			Data: datatypes.JSON([]byte(`{"foo1": "bar1", "foo2": "bar2"}`))})
 
 		query1 := datatypes.JSONQuery("data").Equals("bar1", "foo1")
