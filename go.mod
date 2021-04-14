@@ -1,4 +1,4 @@
-module gorm.io/playground
+module migration-playground
 
 go 1.16
 
