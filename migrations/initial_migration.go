@@ -1,7 +1,7 @@
 package migrations
 
 import (
-	"https://github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
+	"github.com/PrzemyslawSarnacki/migration-playgroud/models"
 	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/gorm"
 )

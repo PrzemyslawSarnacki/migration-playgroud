@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"https://github.com/PrzemyslawSarnacki/migration-playgroud/models"
+	"github.com/PrzemyslawSarnacki/migration-playgroud/models"
 
 	"github.com/go-gormigrate/gormigrate/v2"
 	"gorm.io/datatypes"

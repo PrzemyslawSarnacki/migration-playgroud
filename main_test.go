@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
+	"github.com/PrzemyslawSarnacki/migration-playgroud/models"
 	"gorm.io/playground/models"
 	"testing"
-	"https://github.com/PrzemyslawSarnacki/migration-playgroud/migrations"
-	"https://github.com/PrzemyslawSarnacki/migration-playgroud/models"
 
 	"gorm.io/datatypes"
 )
